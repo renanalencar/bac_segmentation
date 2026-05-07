@@ -63,6 +63,39 @@ Write-Host "🔧 Activating virtual environment..." -ForegroundColor Cyan
 $venvPythonVersion = (.\.venv\Scripts\python --version 2>&1) -replace "Python ", ""
 Write-Host "✅ Virtual environment Python: $venvPythonVersion" -ForegroundColor Green
 
+# Criar estrutura de código fonte
+Write-Host ""
+Write-Host "📁 Creating source code structure..." -ForegroundColor Cyan
+
+$srcDirectories = @(
+    "src",
+    "src\data",
+    "src\features",
+    "src\models",
+    "src\visualization"
+)
+
+foreach ($dir in $srcDirectories) {
+    if (-not (Test-Path $dir)) {
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+    }
+}
+
+# Criar __init__.py files
+$initFiles = @(
+    "src\__init__.py",
+    "src\data\__init__.py",
+    "src\features\__init__.py",
+    "src\models\__init__.py",
+    "src\visualization\__init__.py"
+)
+
+foreach ($file in $initFiles) {
+    if (-not (Test-Path $file)) {
+        New-Item -ItemType File -Path $file -Force | Out-Null
+    }
+}
+
 # Instalar dependências
 Write-Host ""
 Write-Host "📥 Installing dependencies..." -ForegroundColor Cyan
@@ -73,11 +106,11 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# Criar estrutura de diretórios
+# Criar estrutura de diretórios de dados
 Write-Host ""
-Write-Host "📁 Creating directory structure..." -ForegroundColor Cyan
+Write-Host "📁 Creating data directory structure..." -ForegroundColor Cyan
 
-$directories = @(
+$dataDirectories = @(
     "data\raw",
     "data\interim",
     "data\interim\metadata",
@@ -88,7 +121,7 @@ $directories = @(
     "notebooks"
 )
 
-foreach ($dir in $directories) {
+foreach ($dir in $dataDirectories) {
     if (-not (Test-Path $dir)) {
         New-Item -ItemType Directory -Path $dir -Force | Out-Null
     }
@@ -136,7 +169,21 @@ MAX_DOWNLOAD_IMAGES=1000
 # Verificar instalação do PyTorch com CUDA
 Write-Host ""
 Write-Host "🔍 Checking PyTorch installation..." -ForegroundColor Cyan
-python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}'); print(f'CUDA version: {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}')"
+
+$torchCheck = python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())" 2>&1
+$torchVersion = $torchCheck[0]
+$cudaAvailable = $torchCheck[1]
+
+Write-Host "  PyTorch version: $torchVersion" -ForegroundColor White
+Write-Host "  CUDA available: $cudaAvailable" -ForegroundColor White
+
+if ($cudaAvailable -eq "False") {
+    Write-Host ""
+    Write-Host "⚠️  PyTorch CPU-only detected!" -ForegroundColor Yellow
+    Write-Host "   For GPU training, reinstall PyTorch with CUDA:" -ForegroundColor Yellow
+    Write-Host "   uv pip uninstall torch torchvision" -ForegroundColor White
+    Write-Host "   uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121" -ForegroundColor White
+}
 
 Write-Host ""
 Write-Host "==================================" -ForegroundColor Cyan
@@ -150,7 +197,7 @@ Write-Host "  Package manager: uv" -ForegroundColor White
 Write-Host ""
 Write-Host "🚀 Next steps:" -ForegroundColor Yellow
 Write-Host "  1. Activate environment: .\.venv\Scripts\Activate.ps1" -ForegroundColor White
-Write-Host "  2. Install dependencies: uv pip install -e ." -ForegroundColor White
+Write-Host "  2. (Optional) Install CUDA PyTorch: See warning above" -ForegroundColor White
 Write-Host "  3. Download data: python src/data/make_dataset.py data/raw data/interim --download" -ForegroundColor White
 Write-Host ""
 Write-Host "📚 Documentation: README.md" -ForegroundColor Yellow
