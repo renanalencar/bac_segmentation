@@ -2,9 +2,9 @@
 
 ## 1. Acesso ao Sistema
 
-**URL:** https://cvat.cheekymonkeydixie.us/
-**Usuário:** radiologista  
-**Senha:** [senha fornecida]
+- **URL:** https://cvat.cheekymonkeydixie.us/
+- **Usuário:** < usuário fornecido >  
+- **Senha:** < senha fornecida >
 
 ---
 
@@ -63,7 +63,7 @@
 
 **Passo a Passo:**
 
-1️⃣   **Selecionar ferramenta Polygon** (ícone 🔲)
+1️⃣   **Selecionar ferramenta Polygon** (ícone ⬟)
 
 2️⃣   **Escolher label:** "BAC" no dropdown
 
@@ -180,10 +180,9 @@
 
 ## 11. Contato e Suporte
 
-**Dúvidas Técnicas:** [seu WhatsApp/Telegram]  
-**Dúvidas Clínicas:** [seu email]  
-
-**Horário de suporte:** Segunda a Sexta, 9h-18h
+- **Dúvidas Técnicas:** [rca2@ecomp.poli.br](mailto:rca2@ecomp.poli.br)
+- **Dúvidas Clínicas:** [WhatsApp]()
+- **Horário de suporte:** Segunda a Sexta, 9h-18h
 
 ---
 

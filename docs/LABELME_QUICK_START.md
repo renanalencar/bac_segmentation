@@ -84,4 +84,4 @@ R: Apenas calcificações ARTERIAIS (vasculares)
 R: ~2-5 min por caso COM BAC, 30seg por caso SEM BAC
 
 ## Contato
-Dúvidas técnicas ou clínicas: [seu email/WhatsApp]
+Dúvidas técnicas ou clínicas: [rca2@ecomp.poli.br](mailto:rca2@ecomp.poli.br)

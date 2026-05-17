@@ -96,7 +96,6 @@ venv/
 ENV/
 
 # Data directories (keep structure, ignore content)
-data/
 data/raw/*
 data/interim/*
 data/processed/*

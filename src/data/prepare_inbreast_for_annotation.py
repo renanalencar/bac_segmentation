@@ -153,7 +153,7 @@ Mas tem ALTO valor para predição cardiovascular!
 - Caso COM BAC: 2-5 minutos (anotar contornos)
 
 ## Dúvidas:
-Contato: [seu email]
+Contato: [rca2@ecomp.poli.br](rca2@ecomp.poli.br)
 """
 
     with open(output_path / "ANNOTATION_GUIDE.md", "w", encoding="utf-8") as f:

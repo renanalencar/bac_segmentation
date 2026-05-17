@@ -48,4 +48,4 @@ Mas tem ALTO valor para predição cardiovascular!
 - Caso COM BAC: 2-5 minutos (anotar contornos)
 
 ## Dúvidas:
-Contato: [seu email]
+Contato: [rca2@ecomp.poli.br](mailto:rca2@ecomp.poli.br)
