@@ -184,5 +184,5 @@ $RECYCLE.BIN/
 !setup.sh
 !setup.ps1
 
-docs/ehag055.pdf
+**/ehag055.pdf
 token-usage-output.txt
