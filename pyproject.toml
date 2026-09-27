@@ -87,6 +87,7 @@ dependencies = [
     "typing-inspection>=0.4.4",
     "urllib3>=2.8.0",
     "webencodings>=0.6.1",
+    "embed-toolkit>=0.2.14",
 ]
 
 [project.optional-dependencies]
