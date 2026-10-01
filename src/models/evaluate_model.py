@@ -86,6 +86,7 @@ def main(model_path, data_dir, output_dir, threshold, device):
             # Autocast para acelerar a predição na avaliação também
             with torch.amp.autocast('cuda'):
                 output = model(img_tensor)
+                output = torch.sigmoid(output)
                 
             pred_mask = output.squeeze().cpu().numpy()
             binary_mask = (pred_mask > threshold).astype(np.uint8)

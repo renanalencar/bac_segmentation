@@ -146,6 +146,7 @@ def main(model_path, input_dir, output_dir, threshold, device, save_masks, metad
             # Predição
             with torch.amp.autocast('cuda'):
                 output = model(img_tensor)
+                output = torch.sigmoid(output)
             pred_mask = output.squeeze().cpu().numpy()
             
             # Binarizar

@@ -210,4 +210,4 @@ class BACSegmentationModel(nn.Module):
     def forward(self, x):
         features = self.encoder(x)
         mask = self.decoder(features)
-        return torch.sigmoid(mask)
+        return mask

@@ -38,28 +38,37 @@ class DiceLoss(nn.Module):
 
 
 class CombinedLoss(nn.Module):
-    """Dice Loss + Binary Cross Entropy"""
-    def __init__(self, dice_weight=0.5, bce_weight=0.5):
+    """Dice Loss + Binary Cross Entropy (with logits and pos_weight)"""
+    def __init__(self, dice_weight=0.5, bce_weight=0.5, pos_weight=868.0):
         super().__init__()
         self.dice = DiceLoss()
-        self.bce = nn.BCELoss()
+        # pos_weight to handle extreme class imbalance (99.88% background)
+        self.bce = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_weight]))
         self.dice_weight = dice_weight
         self.bce_weight = bce_weight
     
     def forward(self, pred, target):
-        # Flatten para garantir compatibilidade
+        # BCE with logits
         pred_flat = pred.contiguous().view(-1)
         target_flat = target.contiguous().view(-1)
         
-        dice_loss = self.dice(pred, target)
+        # Move pos_weight to the correct device
+        if self.bce.pos_weight.device != pred.device:
+            self.bce.pos_weight = self.bce.pos_weight.to(pred.device)
+            
         bce_loss = self.bce(pred_flat, target_flat)
+        
+        # Dice needs probabilities
+        pred_probs = torch.sigmoid(pred)
+        dice_loss = self.dice(pred_probs, target)
         
         return self.dice_weight * dice_loss + self.bce_weight * bce_loss
 
 
 def calculate_metrics(pred, target, threshold=0.5):
     """Calcular métricas de segmentação"""
-    pred_binary = (pred > threshold).float()
+    pred_probs = torch.sigmoid(pred)
+    pred_binary = (pred_probs > threshold).float()
     target_binary = target.float()
     
     # Flatten
