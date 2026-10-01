@@ -194,8 +194,8 @@ class MLPDecoder(nn.Module):
         
         _c = torch.cat([_c4, _c3, _c2, _c1], dim=1)
         _c = self.linear_fuse(_c)
-        x = F.interpolate(_c, size=(1024, 1024), mode='bilinear', align_corners=False)
-        x = self.classifier(x)
+        x = self.classifier(_c)
+        x = F.interpolate(x, size=(1024, 1024), mode='bilinear', align_corners=False)
         
         return x
 

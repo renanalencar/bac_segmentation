@@ -144,7 +144,8 @@ def main(model_path, input_dir, output_dir, threshold, device, save_masks, metad
             img_tensor = preprocess_image(img_path).to(device)
             
             # Predição
-            output = model(img_tensor)
+            with torch.amp.autocast('cuda'):
+                output = model(img_tensor)
             pred_mask = output.squeeze().cpu().numpy()
             
             # Binarizar

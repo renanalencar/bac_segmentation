@@ -238,7 +238,7 @@ def main(data_dir, output_dir, batch_size, epochs, lr, device, num_workers, seed
     criterion = CombinedLoss(dice_weight=0.5, bce_weight=0.5)
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode='min', factor=0.5, patience=5, verbose=True
+        optimizer, mode='min', factor=0.5, patience=5
     )
     
     writer = SummaryWriter(log_dir=output_path / 'runs')
